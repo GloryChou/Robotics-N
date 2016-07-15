@@ -2,6 +2,7 @@
 import os
 from pyaudio import PyAudio, paInt16
 import wave
+import pyglet
 from datetime import datetime
 import numpy as np 
 
@@ -89,7 +90,7 @@ class Rnaudio(object):
         wf.writeframes("".join(data))
         wf.close()
 
-    # 公有函数：开始录音-->存储录音文件-->返回录音文件名
+    # 录音：开始录音-->存储录音文件-->返回录音文件名
     def Record(self):
         global CHANNELS
 
@@ -145,7 +146,8 @@ class Rnaudio(object):
 
         return self.filename
 
-    def Play(self, filename):
+    # 播放WAV
+    def Play_WAV(self, filename):
         chunk = 1024
         f = wave.open(filename,"rb")
         pa = PyAudio()
@@ -169,6 +171,19 @@ class Rnaudio(object):
         # close PyAudio  
         pa.terminate() 
 
+    # 播放MP3
+    def Play_MP3(self, filename):
+        music = pyglet.media.load(filename)
+        music.play()
+        pyglet.clock.schedule_once(self.__exit_callback, music.duration)
+        pyglet.app.run()
+        pyglet.app.exit()
+    
+    # 停止播放MP3
+    def __exit_callback(self, dt):
+   	    pyglet.app.exit()
+
+    # 删除文件
     def Delete(self, filename):
         os.remove(filename)
         print filename,"removed"
