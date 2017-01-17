@@ -2,6 +2,7 @@
 import urllib, urllib2, pycurl
 import json
 
+# 图灵机器人控制类
 class Rntuling(object):
 
     def __init__(self):

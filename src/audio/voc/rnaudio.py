@@ -6,9 +6,10 @@ import pyglet
 from datetime import datetime
 import numpy as np 
 
-CHANNELS = 1    # 声道数
+CHANNELS = 2    # 声道数
 SAMPWIDTH = 2   # 量化位数
 
+# 音频控制类
 class Rnaudio(object):
     # 初始化：类似于构造函数
     def __init__(self):
